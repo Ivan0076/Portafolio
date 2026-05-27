@@ -2,8 +2,8 @@ __pycache__/
 *.pyc
 *.pyo
 .env
-instance/data.json
-static/uploads/*
+# instance/data.json
+# static/uploads/*
 !static/uploads/.gitkeep
 *.zip
 .DS_Store

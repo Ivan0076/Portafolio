@@ -1,0 +1,92 @@
+{
+  "projects": [
+    {
+      "id": "5d3ce1288d8941afb55a2df6a58ffcb3",
+      "title": "Tyrannosaurus Hunting",
+      "category": "Illustrations",
+      "description": "Un dibujo personal, hecho para un diseño de camisetas",
+      "date": "2025-05-27",
+      "tags": [
+        "Ilustracion"
+      ],
+      "image": "e8ab36cbb5c14efb80c97cb86d979800.jpeg",
+      "created_at": "2026-05-23T17:33:34.288180"
+    },
+    {
+      "id": "f5c839655df54dae9133f5352e0acc94",
+      "title": "Proyecto día de muertos - Paleta Payaso",
+      "category": "Illustrations",
+      "description": "",
+      "date": "",
+      "tags": [],
+      "image": "ffa4b5aa83154f608cabba36231f0ca1.png",
+      "created_at": "2026-05-23T17:36:29.481498",
+      "orientation": "landscape"
+    },
+    {
+      "id": "f8072b3ce9f6473f82014d0ea68c0513",
+      "title": "Motion Graphics - Día de muertos",
+      "category": "2D Animations",
+      "description": "",
+      "date": "",
+      "tags": [],
+      "image": "5f6363c575c84468840e1a016e8f2b9e.mp4",
+      "created_at": "2026-05-23T17:40:37.499971",
+      "orientation": "landscape"
+    },
+    {
+      "id": "454f1de8fbcd4549b6db8b74d8763bf7",
+      "title": "Cine 4DX estilo 60's",
+      "category": "Illustrations",
+      "description": "",
+      "date": "",
+      "tags": [],
+      "image": "217896_Poster.png",
+      "thumbnail": "",
+      "orientation": "landscape",
+      "created_at": "2026-05-26T23:26:03.604444"
+    },
+    {
+      "id": "b43f491e436d47969c48fcb83c349164",
+      "title": "Reel Creativo",
+      "category": "2D Animations",
+      "description": "",
+      "date": "",
+      "tags": [],
+      "image": "5219891effe04fb794f1a9a9689dbb70.mp4",
+      "thumbnail": "",
+      "orientation": "landscape",
+      "created_at": "2026-05-26T23:47:57.377667"
+    }
+  ],
+  "profile": {
+    "name": "Iván Aldama",
+    "title": "Diseñador Digital de Medios Interactivos",
+    "bio": "Apasionado por crear experiencias digitales memorables a través del diseño, la animación y la narrativa visual.",
+    "location": "Ciudad Juárez, México",
+    "email": "contacto@ejemplo.com",
+    "skills": [
+      "Modelado 3D",
+      "Animación 2D/3D",
+      "Ilustración Digital",
+      "Motion Graphics",
+      "UI/UX Design"
+    ],
+    "interests": [
+      "Arte Digital",
+      "Cine de Animación",
+      "Videojuegos",
+      "Fotografía",
+      "Desarrollo Web"
+    ],
+    "tools": [
+      "Blender",
+      "After Effects",
+      "Illustrator",
+      "Photoshop",
+      "Maya 3D",
+      "Figma"
+    ],
+    "avatar": ""
+  }
+}
