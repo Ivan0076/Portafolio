@@ -17,8 +17,8 @@
   --text-muted:  #7a7572;
   --text-dim:    #4a4744;
 
-  --accent:      #2a70e8;
-  --accent-2:    #af60f0;
+  --accent:      #2a83e8;
+  --accent-2:    #60c7f0;
   --accent-glow: rgba(115, 42, 232, 0.25);
 
   --sand:        #c8b89a;
@@ -73,7 +73,7 @@ input, textarea, select, button { font-family: var(--font-body); }
 }
 .cursor-ring {
   width: 32px; height: 32px;
-  border: 1.5px solid rgba(93, 42, 232, 0.4);
+  border: 1.5px solid rgba(42, 93, 232, 0.4);
   border-radius: 50%;
   position: fixed; top: 0; left: 0; z-index: 9999;
   pointer-events: none;
@@ -178,7 +178,7 @@ body:has(button:hover) .cursor-ring {
   cursor: none;
 }
 .btn-primary-custom:hover {
-  background: #731ed4;
+  background: #d44a1e;
   box-shadow: 0 0 30px var(--accent-glow);
   transform: translateY(-1px);
 }
@@ -338,7 +338,7 @@ body:has(button:hover) .cursor-ring {
 
 .avatar-orbit {
   position: absolute; border-radius: 50%;
-  border: 1px solid rgba(42, 140, 232, 0.2);
+  border: 1px solid rgba(232, 87, 42, 0.2);
   animation: orbRotate 12s linear infinite;
 }
 .orbit-1 {
@@ -772,7 +772,7 @@ body:has(button:hover) .cursor-ring {
 .admin-edit-btn:hover { background: var(--accent-2); color: var(--bg); }
 .admin-del-btn {
   font-family: var(--font-mono); font-size: 0.72rem;
-  color: #407abd; border: 1px solid currentColor;
+  color: #409abd; border: 1px solid currentColor;
   padding: 0.5rem 1rem; border-radius: 2px;
   background: transparent; cursor: none;
   transition: background var(--transition), color var(--transition);
@@ -937,7 +937,7 @@ body:has(button:hover) .cursor-ring {
   cursor: none;
 }
 .btn-admin-primary:hover {
-  background: #701ed4;
+  background: #641ed4;
   box-shadow: 0 0 20px var(--accent-glow);
   color: #fff;
 }
@@ -1049,7 +1049,7 @@ body:has(button:hover) .cursor-ring {
 }
 .view-btn:hover { border-color: var(--sand); color: var(--sand); }
 .edit-btn:hover { border-color: var(--accent-2); color: var(--accent-2); }
-.del-btn:hover  { border-color: #4072bd; color: #404abd; background: rgba(189,64,64,0.1); }
+.del-btn:hover  { border-color: #bd4040; color: #bd4040; background: rgba(189,64,64,0.1); }
 
 /* ─── ADMIN FORMS ────────────────────────────────────────── */
 .form-section { padding: 8rem 0 6rem; }

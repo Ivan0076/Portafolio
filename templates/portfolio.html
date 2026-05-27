@@ -8,7 +8,7 @@
     <div class="page-header">
       <div class="page-header-text">
         <span class="page-eyebrow">Trabajo seleccionado</span>
-        <h1 class="page-title">Portfolio</h1>
+        <h1 class="page-title">Portafolio</h1>
       </div>
       <p class="page-subtitle">Explora mis proyectos de diseño digital, modelado 3D, animación e ilustración.</p>
     </div>
@@ -34,8 +34,7 @@
       {% for project in projects %}
       <a href="{{ url_for('project_detail', pid=project.id) }}"
          class="project-tile"
-         data-category="{{ project.category }}"
-         style="--tile-delay:{{ loop.index0 * 0.06 }}s">
+         data-category="{{ project.category }}"></a>
         <div class="tile-media">
           {% if project.image %}
           <img src="{{ url_for('static', filename='uploads/' + project.image) }}"

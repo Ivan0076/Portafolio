@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: portfolio
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --timeout 120 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: OWNER_USERNAME
+        value: admin
+      - key: OWNER_PASSWORD_HASH
+        sync: false
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/static/uploads
+      sizeGB: 10

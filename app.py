@@ -12,8 +12,9 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'portfolio-secret-2024-xyz-change-this')
 
 # ── Config ───────────────────────────────────────────────────────────────────
-UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
-DATA_FILE     = os.path.join(app.root_path, 'instance', 'data.json')
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+# data.json lives in the uploads folder so it persists on Render disk
+DATA_FILE     = os.path.join(UPLOAD_FOLDER, 'data.json')
 
 # Archivos permitidos — incluye formatos 3D y video
 ALLOWED_EXT = {
@@ -32,13 +33,12 @@ app.config['UPLOAD_FOLDER']      = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
 
 # ── Owner credentials (¡CAMBIA ESTO!) ────────────────────────────────────────
 OWNER_USERNAME     = os.environ.get('OWNER_USERNAME', 'admin')
 OWNER_PASSWORD_HASH = os.environ.get(
     'OWNER_PASSWORD_HASH',
-    generate_password_hash('portfolio2026!')
+    generate_password_hash('portfolio2024!')
 )
 
 CATEGORIES = ['3D Models', '2D Animations', '3D Animations', 'Illustrations']
@@ -70,15 +70,15 @@ def save_data(data):
 
 def default_profile():
     return {
-        'name': 'Tu Nombre',
+        'name': 'Iván Aldama',
         'title': 'Diseñador Digital de Medios Interactivos',
         'bio': 'Apasionado por crear experiencias digitales memorables a través del diseño, la animación y la narrativa visual.',
         'location': 'Ciudad Juárez, México',
         'email': 'contacto@ejemplo.com',
         'skills': ['Modelado 3D', 'Animación 2D/3D', 'Ilustración Digital',
-                   'Motion Graphics', 'UI/UX Design'],
+                   'Motion Graphics', 'UI/UX Design', 'Diseño Editorial'],
         'interests': ['Arte Digital', 'Cine de Animación', 'Videojuegos', 'Fotografía', 'Desarrollo web'],
-        'tools': ['Blender', 'After Effects', 'Illustrator', 'Photoshop', 'Cinema 4D', 'Figma'],
+        'tools': ['Blender', 'After Effects', 'Illustrator', 'Photoshop', 'Maya 3D', 'Figma'],
         'avatar': '',
     }
 

@@ -87,3 +87,16 @@ gunicorn -w 4 -b 0.0.0.0:8000 app:app
 - **Illustrations** — Dibujos e ilustraciones digitales
 
 ---
+
+## Identidad visual
+
+| Elemento   | Valor                              |
+|------------|------------------------------------|
+| Tema       | Dark editorial / brutalismo geométrico |
+| Fuente display | Syne (800 weight)              |
+| Fuente cuerpo  | DM Sans (300/400)              |
+| Fuente mono    | Space Mono                    |
+| Color principal | `#0d0d0d` (charcoal profundo) |
+| Acento      | `#e8572a` (coral eléctrico)       |
+| Acento 2    | `#f0a060` (ámbar cálido)          |
+| Arena       | `#c8b89a`                         |
