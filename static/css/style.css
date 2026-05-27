@@ -178,7 +178,7 @@ body:has(button:hover) .cursor-ring {
   cursor: none;
 }
 .btn-primary-custom:hover {
-  background: #d44a1e;
+  background: #701ed4;
   box-shadow: 0 0 30px var(--accent-glow);
   transform: translateY(-1px);
 }
@@ -681,20 +681,52 @@ body:has(button:hover) .cursor-ring {
   align-items: start;
 }
 
+/* Contenedor flexible */
 .detail-media-frame {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  aspect-ratio: 16/10;
   background: var(--bg-2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* --- Ajustes por orientación --- */
+/* Cuando es horizontal (landscape) */
+.detail-media-frame.landscape {
+  aspect-ratio: 16 / 9;
+}
+
+/* Cuando es vertical (portrait) */
+.detail-media-frame.portrait {
+  max-width: 500px; /* Limitamos el ancho para que no se vea gigante */
+  margin: 0 auto;   /* Centrado */
+  aspect-ratio: 9 / 16;
+}
+
+/* Asegurar que la imagen o video llene el contenedor sin deformarse */
 .detail-media-img, .detail-media-video {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Cambiado de 'cover' a 'contain' para ver todo */
+  background: #000;    /* Fondo negro si hay bandas laterales */
 }
 .detail-placeholder {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .detail-media-frame.portrait {
+    max-width: 100%; /* En móvil, que ocupe todo el ancho disponible */
+  }
+}
+
 .placeholder-big { font-size: 6rem; color: var(--text-dim); }
 
 .detail-cat-badge {

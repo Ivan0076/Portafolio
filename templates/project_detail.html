@@ -19,15 +19,15 @@
     <div class="detail-layout">
       <!-- LEFT: MEDIA -->
       <div class="detail-media-col">
-        <div class="detail-media-frame">
+        <div class="detail-media-frame {{ project.orientation if project.orientation else 'landscape' }}">
           {% if project.image %}
             {% set ext = project.image.rsplit('.', 1)[-1].lower() %}
-            {% if ext in ['mp4', 'webm'] %}
+            {% if ext in ['mp4', 'webm', 'mov'] %}
             <video src="{{ url_for('static', filename='uploads/' + project.image) }}"
-                   controls class="detail-media-video" autoplay muted loop></video>
+                  controls class="detail-media-video" autoplay muted loop></video>
             {% else %}
             <img src="{{ url_for('static', filename='uploads/' + project.image) }}"
-                 alt="{{ project.title }}" class="detail-media-img"/>
+                alt="{{ project.title }}" class="detail-media-img"/>
             {% endif %}
           {% else %}
           <div class="detail-placeholder">

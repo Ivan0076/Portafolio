@@ -67,8 +67,15 @@
             <img id="imgPreview" class="d-none upload-preview-img"/>
             {% endif %}
           </div>
-          <input type="file" name="image" id="imageInput" accept="image/*,video/*" class="d-none"
-                 onchange="previewFile(this)"/>
+            <input type="file" name="main_file" id="imageInput" accept="image/*,video/*" class="d-none" onchange="previewFile(this)"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Orientación del contenido</label>
+          <select name="orientation" class="form-select-custom">
+            <option value="landscape" {% if project and project.orientation == 'landscape' %}selected{% endif %}>Horizontal (Landscape)</option>
+            <option value="portrait" {% if project and project.orientation == 'portrait' %}selected{% endif %}>Vertical (Portrait)</option>
+          </select>
         </div>
 
         <div class="form-actions">
