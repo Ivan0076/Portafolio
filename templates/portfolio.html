@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Portfolio — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="portfolio-page">
+  <div class="container-fluid px-4">
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <span class="page-eyebrow">Trabajo seleccionado</span>
+        <h1 class="page-title">Portfolio</h1>
+      </div>
+      <p class="page-subtitle">Explora mis proyectos de diseño digital, modelado 3D, animación e ilustración.</p>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <a href="{{ url_for('portfolio') }}"
+         class="filter-btn {% if active_cat == 'all' %}active{% endif %}">
+        Todos
+        <span class="filter-count">{{ projects|length if active_cat == 'all' else '' }}</span>
+      </a>
+      {% for cat in categories %}
+      <a href="{{ url_for('portfolio', category=cat) }}"
+         class="filter-btn {% if active_cat == cat %}active{% endif %}">
+        {{ cat }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- PROJECTS GRID -->
+    {% if projects %}
+    <div class="projects-masonry" id="projectsGrid">
+      {% for project in projects %}
+      <a href="{{ url_for('project_detail', pid=project.id) }}"
+         class="project-tile"
+         data-category="{{ project.category }}"
+         style="--tile-delay:{{ loop.index0 * 0.06 }}s">
+        <div class="tile-media">
+          {% if project.image %}
+          <img src="{{ url_for('static', filename='uploads/' + project.image) }}"
+               alt="{{ project.title }}" loading="lazy"/>
+          {% else %}
+          <div class="tile-placeholder">
+            <div class="placeholder-icon">
+              {% if project.category == '3D Models' %}⬡
+              {% elif project.category == '2D Animations' %}◎
+              {% elif project.category == '3D Animations' %}⬡
+              {% else %}✦{% endif %}
+            </div>
+          </div>
+          {% endif %}
+          <div class="tile-hover-info">
+            <span class="tile-cat">{{ project.category }}</span>
+            <span class="tile-view">Ver proyecto <i class="bi bi-arrow-up-right"></i></span>
+          </div>
+        </div>
+        <div class="tile-meta">
+          <h3 class="tile-title">{{ project.title }}</h3>
+          <div class="tile-bottom">
+            <span class="tile-date">{{ project.date }}</span>
+            {% if project.tags %}
+            <div class="tile-tags">
+              {% for tag in project.tags[:2] %}
+              <span class="tile-tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">◈</div>
+      <p>No hay proyectos en esta categoría aún.</p>
+      <a href="{{ url_for('portfolio') }}" class="btn-ghost-custom">Ver todos</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

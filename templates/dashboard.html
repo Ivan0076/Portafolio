@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Panel Admin — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="admin-section">
+  <div class="container-fluid px-4">
+    <div class="admin-header">
+      <div>
+        <span class="admin-eyebrow"><i class="bi bi-shield-check me-2"></i>Panel de Administración</span>
+        <h1 class="admin-title">Bienvenido, {{ profile.name.split()[0] }}</h1>
+      </div>
+      <div class="admin-header-actions">
+        <a href="{{ url_for('edit_profile') }}" class="btn-admin-secondary">
+          <i class="bi bi-person-gear me-1"></i>Editar Perfil
+        </a>
+        <a href="{{ url_for('new_project') }}" class="btn-admin-primary">
+          <i class="bi bi-plus-lg me-1"></i>Nuevo Proyecto
+        </a>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="admin-stats">
+      <div class="stat-card stat-total">
+        <span class="stat-num">{{ projects|length }}</span>
+        <span class="stat-label">Total proyectos</span>
+      </div>
+      {% for cat, count in stats.items() %}
+      <div class="stat-card">
+        <span class="stat-num">{{ count }}</span>
+        <span class="stat-label">{{ cat }}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- PROJECT LIST -->
+    <div class="admin-projects-header">
+      <h2 class="admin-section-title">Todos los Proyectos</h2>
+    </div>
+
+    {% if projects %}
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Vista previa</th>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Fecha</th>
+            <th>Tags</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects|sort(attribute='date', reverse=True) %}
+          <tr>
+            <td>
+              <div class="admin-thumb">
+                {% if project.image %}
+                <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt=""/>
+                {% else %}
+                <div class="thumb-placeholder">◈</div>
+                {% endif %}
+              </div>
+            </td>
+            <td><span class="project-title-cell">{{ project.title }}</span></td>
+            <td><span class="cat-pill cat-{{ project.category|replace(' ', '-')|lower }}">{{ project.category }}</span></td>
+            <td><span class="date-cell">{{ project.date }}</span></td>
+            <td>
+              {% for tag in project.tags[:3] %}
+              <span class="admin-tag">{{ tag }}</span>
+              {% endfor %}
+            </td>
+            <td>
+              <div class="action-btns">
+                <a href="{{ url_for('project_detail', pid=project.id) }}" class="action-btn view-btn" title="Ver"><i class="bi bi-eye"></i></a>
+                <a href="{{ url_for('edit_project', pid=project.id) }}" class="action-btn edit-btn" title="Editar"><i class="bi bi-pencil"></i></a>
+                <form method="POST" action="{{ url_for('delete_project', pid=project.id) }}"
+                      onsubmit="return confirm('¿Eliminar «{{ project.title }}»?');">
+                  <button type="submit" class="action-btn del-btn" title="Eliminar"><i class="bi bi-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">◈</div>
+      <p>Sin proyectos todavía. ¡Agrega tu primer proyecto!</p>
+      <a href="{{ url_for('new_project') }}" class="btn-admin-primary">
+        <i class="bi bi-plus-lg me-1"></i>Nuevo Proyecto
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

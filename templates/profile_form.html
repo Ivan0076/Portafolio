@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Editar Perfil — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="container-fluid px-4">
+    <div class="form-page-header">
+      <a href="{{ url_for('dashboard') }}" class="back-link">
+        <i class="bi bi-arrow-left me-2"></i>Volver al panel
+      </a>
+      <h1 class="form-page-title">Editar Perfil</h1>
+    </div>
+    <div class="form-card">
+      <form method="POST" enctype="multipart/form-data" class="admin-form">
+        <!-- AVATAR -->
+        <div class="form-group text-center mb-5">
+          <div class="avatar-upload-wrap" onclick="document.getElementById('avatarInput').click()">
+            {% if profile.avatar %}
+            <img src="{{ url_for('static', filename='uploads/' + profile.avatar) }}"
+                 alt="avatar" class="avatar-preview" id="avatarPreview"/>
+            {% else %}
+            <div class="avatar-preview avatar-initials" id="avatarFallback">
+              {{ profile.name[:2].upper() if profile.name else 'DP' }}
+            </div>
+            <img id="avatarPreview" class="avatar-preview d-none"/>
+            {% endif %}
+            <div class="avatar-upload-overlay"><i class="bi bi-camera"></i></div>
+          </div>
+          <input type="file" name="avatar" id="avatarInput" accept="image/*" class="d-none"
+                 onchange="previewAvatar(this)"/>
+          <p class="mt-2 text-muted small">Haz clic para cambiar la foto</p>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label-custom">Nombre completo</label>
+            <input type="text" name="name" class="form-input-custom" value="{{ profile.name }}" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Título profesional</label>
+            <input type="text" name="title" class="form-input-custom" value="{{ profile.title }}"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Biografía</label>
+          <textarea name="bio" class="form-textarea-custom" rows="4">{{ profile.bio }}</textarea>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label-custom">Ubicación</label>
+            <input type="text" name="location" class="form-input-custom" value="{{ profile.location }}"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Correo electrónico</label>
+            <input type="email" name="email" class="form-input-custom" value="{{ profile.email }}"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Habilidades <small>(separadas por coma)</small></label>
+          <input type="text" name="skills" class="form-input-custom"
+                 value="{{ profile.skills|join(', ') }}"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Herramientas <small>(separadas por coma)</small></label>
+          <input type="text" name="tools" class="form-input-custom"
+                 value="{{ profile.tools|join(', ') }}"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Intereses <small>(separados por coma)</small></label>
+          <input type="text" name="interests" class="form-input-custom"
+                 value="{{ profile.interests|join(', ') }}"/>
+        </div>
+
+        <div class="form-actions">
+          <a href="{{ url_for('dashboard') }}" class="btn-ghost-custom">Cancelar</a>
+          <button type="submit" class="btn-primary-custom">
+            Guardar perfil <i class="bi bi-check-lg ms-2"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function previewAvatar(input) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('avatarPreview');
+    prev.src = e.target.result;
+    prev.classList.remove('d-none');
+    const fallback = document.getElementById('avatarFallback');
+    if (fallback) fallback.style.display = 'none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+</script>
+{% endblock %}

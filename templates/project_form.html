@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}{% if project %}Editar{% else %}Nuevo{% endif %} Proyecto — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="container-fluid px-4">
+    <div class="form-page-header">
+      <a href="{{ url_for('dashboard') }}" class="back-link">
+        <i class="bi bi-arrow-left me-2"></i>Volver al panel
+      </a>
+      <h1 class="form-page-title">{% if project %}Editar Proyecto{% else %}Nuevo Proyecto{% endif %}</h1>
+    </div>
+
+    <div class="form-card">
+      <form method="POST" enctype="multipart/form-data" class="admin-form">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label-custom">Título del proyecto *</label>
+            <input type="text" name="title" class="form-input-custom"
+                   value="{{ project.title if project else '' }}" required placeholder="Nombre del proyecto"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Categoría *</label>
+            <select name="category" class="form-select-custom" required>
+              {% for cat in categories %}
+              <option value="{{ cat }}" {% if project and project.category == cat %}selected{% endif %}>{{ cat }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label-custom">Descripción</label>
+          <textarea name="description" class="form-textarea-custom" rows="5"
+                    placeholder="Describe tu proyecto, proceso creativo, herramientas usadas...">{{ project.description if project else '' }}</textarea>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label-custom">Fecha de creación</label>
+            <input type="date" name="date" class="form-input-custom"
+                   value="{{ project.date if project else '' }}"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Tags (separados por coma)</label>
+            <input type="text" name="tags" class="form-input-custom"
+                   value="{{ project.tags|join(', ') if project and project.tags else '' }}"
+                   placeholder="blender, motion, ui..."/>
+          </div>
+        </div>
+
+        <!-- IMAGE UPLOAD -->
+        <div class="form-group">
+          <label class="form-label-custom">Imagen / Video del proyecto</label>
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('imageInput').click()">
+            {% if project and project.image %}
+            <div class="upload-preview-existing">
+              <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="preview" id="imgPreview"/>
+              <span class="upload-replace">Haz clic para reemplazar</span>
+            </div>
+            {% else %}
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <i class="bi bi-cloud-arrow-up upload-icon"></i>
+              <p>Arrastra una imagen o haz clic para seleccionar</p>
+              <span>PNG, JPG, GIF, WEBP, SVG, MP4 — máx. 64MB</span>
+            </div>
+            <img id="imgPreview" class="d-none upload-preview-img"/>
+            {% endif %}
+          </div>
+          <input type="file" name="image" id="imageInput" accept="image/*,video/*" class="d-none"
+                 onchange="previewFile(this)"/>
+        </div>
+
+        <div class="form-actions">
+          <a href="{{ url_for('dashboard') }}" class="btn-ghost-custom">Cancelar</a>
+          <button type="submit" class="btn-primary-custom">
+            {% if project %}Guardar cambios{% else %}Publicar proyecto{% endif %}
+            <i class="bi bi-check-lg ms-2"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function previewFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById('imgPreview');
+  const placeholder = document.getElementById('uploadPlaceholder');
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.classList.remove('d-none');
+      if (placeholder) placeholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    if (placeholder) placeholder.innerHTML = `<i class="bi bi-film upload-icon"></i><p>${file.name}</p>`;
+  }
+}
+const zone = document.getElementById('uploadZone');
+if (zone) {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    const dt = e.dataTransfer;
+    if (dt.files.length) {
+      document.getElementById('imageInput').files = dt.files;
+      previewFile(document.getElementById('imageInput'));
+    }
+  });
+}
+</script>
+{% endblock %}

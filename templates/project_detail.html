@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="detail-page">
+  <div class="container-fluid px-4">
+
+    <!-- BREADCRUMB -->
+    <nav class="detail-breadcrumb">
+      <a href="{{ url_for('index') }}">Inicio</a>
+      <span class="bc-sep">→</span>
+      <a href="{{ url_for('portfolio') }}">Portfolio</a>
+      <span class="bc-sep">→</span>
+      <a href="{{ url_for('portfolio', category=project.category) }}">{{ project.category }}</a>
+      <span class="bc-sep">→</span>
+      <span class="bc-current">{{ project.title }}</span>
+    </nav>
+
+    <div class="detail-layout">
+      <!-- LEFT: MEDIA -->
+      <div class="detail-media-col">
+        <div class="detail-media-frame">
+          {% if project.image %}
+            {% set ext = project.image.rsplit('.', 1)[-1].lower() %}
+            {% if ext in ['mp4', 'webm'] %}
+            <video src="{{ url_for('static', filename='uploads/' + project.image) }}"
+                   controls class="detail-media-video" autoplay muted loop></video>
+            {% else %}
+            <img src="{{ url_for('static', filename='uploads/' + project.image) }}"
+                 alt="{{ project.title }}" class="detail-media-img"/>
+            {% endif %}
+          {% else %}
+          <div class="detail-placeholder">
+            <span class="placeholder-big">◈</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- RIGHT: INFO -->
+      <div class="detail-info-col">
+        <div class="detail-cat-badge">{{ project.category }}</div>
+        <h1 class="detail-title">{{ project.title }}</h1>
+
+        <div class="detail-meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">Categoría</span>
+            <span class="meta-value">{{ project.category }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Fecha</span>
+            <span class="meta-value">{{ project.date }}</span>
+          </div>
+          {% if project.tags %}
+          <div class="meta-item meta-full">
+            <span class="meta-label">Tags</span>
+            <div class="meta-tags">
+              {% for tag in project.tags %}
+              <span class="detail-tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="detail-desc">
+          <span class="desc-label">Descripción</span>
+          <p>{{ project.description }}</p>
+        </div>
+
+        <div class="detail-actions">
+          <a href="{{ url_for('portfolio') }}" class="btn-ghost-custom">
+            <i class="bi bi-arrow-left me-2"></i>Volver al Portfolio
+          </a>
+          <a href="{{ url_for('portfolio', category=project.category) }}" class="btn-cat-link">
+            Más de {{ project.category }} <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+        </div>
+
+        {% if session.get('logged_in') %}
+        <div class="detail-admin-bar">
+          <a href="{{ url_for('edit_project', pid=project.id) }}" class="admin-edit-btn">
+            <i class="bi bi-pencil me-1"></i>Editar
+          </a>
+          <form method="POST" action="{{ url_for('delete_project', pid=project.id) }}"
+                onsubmit="return confirm('¿Eliminar este proyecto?');" class="d-inline">
+            <button type="submit" class="admin-del-btn">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.name }} — Diseñador Digital{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+  <div class="hero-grid-bg"></div>
+  <div class="container-fluid px-4">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Disponible para proyectos</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-name">{{ profile.name }}</span>
+        <span class="hero-role">{{ profile.title }}</span>
+      </h1>
+      <p class="hero-bio">{{ profile.bio }}</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('portfolio') }}" class="btn-primary-custom">
+          Ver Portfolio <i class="bi bi-arrow-right ms-2"></i>
+        </a>
+        {% if profile.email %}
+        <a href="mailto:{{ profile.email }}" class="btn-ghost-custom">
+          Contacto
+        </a>
+        {% endif %}
+      </div>
+      <div class="hero-location">
+        <i class="bi bi-geo-alt me-1"></i>{{ profile.location }}
+      </div>
+    </div>
+    {% if profile.avatar %}
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar-frame">
+        <img src="{{ url_for('static', filename='uploads/' + profile.avatar) }}" alt="{{ profile.name }}" class="hero-avatar-img"/>
+      </div>
+      <div class="avatar-orbit orbit-1"></div>
+      <div class="avatar-orbit orbit-2"></div>
+    </div>
+    {% else %}
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar-frame hero-avatar-placeholder">
+        <span class="placeholder-initials">{{ profile.name[:2].upper() if profile.name else 'DP' }}</span>
+      </div>
+      <div class="avatar-orbit orbit-1"></div>
+      <div class="avatar-orbit orbit-2"></div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="hero-scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="skills-section">
+  <div class="container-fluid px-4">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Habilidades</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      {% for skill in profile.skills %}
+      <div class="skill-card" {{ ('style="--delay: ' ~ (loop.index0 * 0.08) ~ 's;"')|safe }}>
+        <div class="skill-icon">◆</div>
+        <span class="skill-name">{{ skill }}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="tools-strip">
+      <span class="tools-label">Herramientas /</span>
+      {% for tool in profile.tools %}
+      <span class="tool-badge">{{ tool }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="interests-section">
+  <div class="container-fluid px-4">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Intereses</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="interests-list">
+      {% for interest in profile.interests %}
+      <div class="interest-item">
+        <span class="interest-index">0{{ loop.index }}</span>
+        <span class="interest-name">{{ interest }}</span>
+        <div class="interest-bar">
+          <div class="interest-fill" {{ ('style="width: ' ~ [100, 85, 90, 75, 80, 95][loop.index0 % 6] ~ '%;"')|safe }}></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if recent %}
+<section class="recent-section">
+  <div class="container-fluid px-4">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Trabajo Reciente</h2>
+      <div class="section-line"></div>
+      <a href="{{ url_for('portfolio') }}" class="see-all-link">Ver todo <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="recent-grid">
+      {% for project in recent %}
+      <a href="{{ url_for('project_detail', pid=project.id) }}" class="recent-card" {{ ('style="--delay: ' ~ (loop.index0 * 0.12) ~ 's;"')|safe }}>
+        <div class="recent-card-img">
+          {% if project.image %}
+          <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="{{ project.title }}" loading="lazy"/>
+          {% else %}
+          <div class="card-img-placeholder">
+            <span>{{ project.category[0] if project.category else '?' }}</span>
+          </div>
+          {% endif %}
+          <div class="card-overlay">
+            <span class="card-cat-badge">{{ project.category }}</span>
+          </div>
+        </div>
+        <div class="recent-card-body">
+          <h3 class="card-title">{{ project.title }}</h3>
+          <p class="card-desc">{{ project.description[:90] ~ '…' if project.description|length > 90 else project.description }}</p>
+          <span class="card-date">{{ project.date }}</span>
+        </div>
+        <div class="card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
